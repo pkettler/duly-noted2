@@ -1,48 +1,25 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ReactMarkdown from 'react-markdown';
-import { IonItem, IonLabel } from '@ionic/react';
+import { IonItem } from '@ionic/react';
 import formatDate from '../util/formatDate';
+import formatNoteItemText from '../util/formatNoteItemText';
+import PropTypes from 'prop-types';
 
 export default function NoteListItem(props) {
   const { createdAt, id, onClick = () => {}, text } = props;
 
-  let truncatedText;
-  if (text.length > 200) {
-    truncatedText = `${text.substr(0, 200)}...`;
-  } else {
-    truncatedText = text;
-  }
-
-  const addDefaultText = (text) => {
-    let textToTrim = text.trim(text);
-    if (textToTrim === '') {
-      return (textToTrim = 'No Note Text');
-    } else if (textToTrim === ' ') {
-      return (textToTrim = 'No Note Text');
-    } else {
-      return textToTrim;
-    }
-  };
-
-  const [timesClicked, setTimesClicked] = useState(0);
-
-  const handleListItemClick = (event) => {
-    event.preventDefault();
-    setTimesClicked(timesClicked + 1);
-    if (onClick) {
-      onClick(id);
-    }
-  };
-
-  const oneHourAgo = Date.now() - 1 * 60 * 60 * 1000;
-  const now = Date.now();
-  const oneWeek = Date.now() - 100 * 60 * 60 * 1000;
-  const oneMonth = Date.now() - 30 * 24 * 60 * 60 * 1000;
-
   return (
-    <IonItem onClick={handleListItemClick}>
-      <ReactMarkdown children={addDefaultText(truncatedText)} />
-      {formatDate(createdAt)}
+    <IonItem onClick={() => onClick(id)}>
+      <ReactMarkdown children={formatNoteItemText(text)} />
+      <p>{formatDate(createdAt)}</p>
     </IonItem>
   );
 }
+
+NoteListItem.propTypes = {
+  createdAt: PropTypes.instanceOf(Date),
+  id: PropTypes.string.isRequired,
+  onClick: PropTypes.func,
+  text: PropTypes.string.isRequired,
+  isArchived: PropTypes.bool.isRequired,
+};

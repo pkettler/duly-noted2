@@ -10,15 +10,22 @@ import {
   IonButton,
   IonIcon,
   IonActionSheet,
+  IonAlert,
 } from '@ionic/react';
-import { chevronBack, ellipsisHorizontal, trash, close } from 'ionicons/icons';
+import {
+  chevronBack,
+  ellipsisHorizontal,
+  trash,
+  archive,
+} from 'ionicons/icons';
 import styles from './NoteEditPage.module.css';
 
 export default function NoteEditPage(props) {
-  const { text, onSave, onDelete } = props;
+  const { text, onSave, onDelete, onArchive } = props;
 
   const [value, setValue] = useState(text);
   const [showActions, setShowActions] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
 
   return (
     <IonPage>
@@ -53,7 +60,12 @@ export default function NoteEditPage(props) {
               text: 'Delete',
               role: 'destructive',
               icon: trash,
-              handler: onDelete,
+              handler: () => setShowAlert(true),
+            },
+            {
+              text: 'Edit Archive',
+              icon: archive,
+              handler: onArchive,
             },
             {
               text: 'Cancel',
@@ -63,15 +75,23 @@ export default function NoteEditPage(props) {
             },
           ]}
         />
-        {/* <button type="button" onClick={() => onSave(value)}>
-          Save
-        </button>
-        <button type="button" onClick={() => onCancel()}>
-          Cancel
-        </button>
-        <button type="button" onClick={() => onDelete()}>
-          Delete
-        </button> */}
+        <IonAlert
+          isOpen={showAlert}
+          onDidDismiss={() => setShowAlert(false)}
+          header={'Delete?'}
+          message={'Are you sure?'}
+          buttons={[
+            {
+              text: 'Cancel',
+              role: 'cancel',
+              handler: () => setShowAlert(false),
+            },
+            {
+              text: 'Delete',
+              handler: onDelete,
+            },
+          ]}
+        />
       </IonContent>
     </IonPage>
   );
@@ -80,5 +100,6 @@ export default function NoteEditPage(props) {
 NoteEditPage.propTypes = {
   onSave: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
+  onArchive: PropTypes.func.isRequired,
   text: PropTypes.string.isRequired,
 };

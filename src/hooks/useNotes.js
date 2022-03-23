@@ -51,6 +51,18 @@ export default function useNotes() {
       // setNotes(notes.filter((note) => note.id !== id));
       saveNotes(deleteThis);
     },
+    archiveNote(id) {
+      const updatedNotes = notes.map((note) => {
+        if (note.id === id) {
+          return {
+            ...note,
+            isArchived: true,
+          };
+        }
+        return note;
+      });
+      saveNotes(updatedNotes);
+    },
     updateNote(id, updatedNoteText) {
       const updatedNotes = notes.map((note) => {
         if (note.id === id) {
