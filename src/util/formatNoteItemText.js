@@ -3,7 +3,7 @@ export default function formatNoteItemText(text) {
     text = 'No note text';
   }
   if (text.length > 200) {
-    text = `${text.substr(0, 200)}...`;
+    text = text.substring(0, 200) + '...';
   }
 
   text = text.trim();
@@ -11,13 +11,11 @@ export default function formatNoteItemText(text) {
 
   if (text === '') {
     text = 'No note text';
-  } else if (text === ' ') {
-    return (text = 'No Note Text');
-  } else {
-    return text;
   }
+
+  return text;
 }
-//***************Moved to ../util/formatNoteItemText  */
+//***************Moved from NoteListItem to ../util/formatNoteItemText  */
 // let truncatedText;
 // if (text.length > 200) {
 //   truncatedText = `${text.substr(0, 200)}...`;

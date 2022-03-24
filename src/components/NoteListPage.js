@@ -17,12 +17,14 @@ import NoteListItem from './NoteListItem';
 import { useHistory } from 'react-router-dom';
 import useNotes from '../hooks/useNotes';
 import { add, funnel } from 'ionicons/icons';
+import { useTranslation } from 'react-i18next';
 
 export default function NoteListPage(props) {
   const history = useHistory();
   const { notes, createNote } = useNotes();
   const activeNotes = notes.filter((note) => note.isArchived !== true);
   const [showActive, setShowActive] = useState(activeNotes);
+  const { t } = useTranslation();
 
   const handleListItemClick = (id) => {
     history.push(`/notes/edit/${id}`);
@@ -50,7 +52,7 @@ export default function NoteListPage(props) {
               <IonIcon slot="icon-only" icon={funnel} />
             </IonButton>
           </IonButtons>
-          <IonTitle>Note List</IonTitle>
+          <IonTitle>{t('noteListPageTitle')}</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
