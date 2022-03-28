@@ -12,7 +12,7 @@ export default {
   },
   es: {
     translation: {
-      noteListPageTitle: 'Lista de notas',
+      noteListPageTitle: 'Spanish Note List',
       noteEditDelete: 'Borrar',
       noteEditArchive: 'Archivo',
       noteEditCancel: 'Cancelar',

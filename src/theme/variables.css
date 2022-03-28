@@ -1,3 +1,5 @@
+
+
 /* Ionic Variables and Theming. For more info, please see:
 http://ionicframework.com/docs/theming/ */
 
@@ -74,7 +76,35 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+
+  /* ** NoteListPage ** */
+  --ion-background-color: linear-gradient(to left, rgb(22, 44, 104) 0%, rgba(0,128,128,1) 100%);
+  text-align: center;
+
 }
+
+@font-face {
+  font-family: 'SEGA LOGO FONT';
+  font-style: normal;
+  font-weight: normal;
+  src: local('SEGA LOGO FONT'), url('../SEGA.woff') format('woff');
+  }
+  
+  .title {
+    margin-top: 10px;
+    font-size: 5em;
+    font-family: 'SEGA LOGO FONT';
+    font-weight: 200;
+    color: #0ccac4;
+  }
+
+  .note-body{
+      font-family: sans-serif;
+      color: white;
+      align-content: center;
+      text-align: center;
+  }
+
 
 @media (prefers-color-scheme: dark) {
   /*
@@ -234,3 +264,4 @@ http://ionicframework.com/docs/theming/ */
     --ion-card-background: #1e1e1e;
   }
 }
+

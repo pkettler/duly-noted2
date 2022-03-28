@@ -22,9 +22,20 @@ import { useTranslation } from 'react-i18next';
 export default function NoteListPage(props) {
   const history = useHistory();
   const { notes, createNote } = useNotes();
-  const activeNotes = notes.filter((note) => note.isArchived !== true);
-  const [showActive, setShowActive] = useState(activeNotes);
+  // const activeNotes = notes.filter((note) => note.isArchived !== true);
+  const [showActive, setShowActive] = useState(false);
   const { t } = useTranslation();
+
+  let filteredNotes;
+  if (showActive) {
+    filteredNotes = notes.filter((note) => note.isArchived !== true);
+  } else {
+    filteredNotes = notes;
+  }
+
+  const handleArchiveFilterClick = () => {
+    setShowActive(!showActive);
+  };
 
   const handleListItemClick = (id) => {
     history.push(`/notes/edit/${id}`);
@@ -33,14 +44,6 @@ export default function NoteListPage(props) {
   const handleNewNoteClick = () => {
     const { id } = createNote();
     history.push(`/notes/edit/${id}`);
-  };
-
-  const handleArchiveFilterClick = () => {
-    if (showActive === notes) {
-      setShowActive(activeNotes);
-    } else {
-      setShowActive(notes);
-    }
   };
 
   return (
@@ -52,12 +55,12 @@ export default function NoteListPage(props) {
               <IonIcon slot="icon-only" icon={funnel} />
             </IonButton>
           </IonButtons>
-          <IonTitle>{t('noteListPageTitle')}</IonTitle>
+          <IonTitle class="title">{t('noteListPageTitle')}</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <IonList>
-          {showActive.map((note) => {
+        <IonList class="note-body">
+          {filteredNotes.map((note) => {
             return (
               <NoteListItem
                 id={note.id}

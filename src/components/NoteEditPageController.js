@@ -14,7 +14,7 @@ export default function NoteEditPageController() {
   //Save Note
 
   const handleOnSave = (newNoteText) => {
-    if (newNoteText === '') {
+    if (newNoteText.trim() === '') {
       deleteNote(id);
       history.goBack();
     } else {

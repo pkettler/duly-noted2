@@ -39,6 +39,7 @@ export default function useNotes() {
         id,
         createdAt: new Date(),
         text: '',
+        isArchived: false,
       };
 
       const updatedNotes = [newNote, ...notes];
