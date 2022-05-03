@@ -15,26 +15,68 @@ import {
 import PropTypes from 'prop-types';
 import NoteListItem from './NoteListItem';
 import { useHistory } from 'react-router-dom';
-import useNotes from '../hooks/useNotes';
+// import useNotes from '../hooks/useNotes';
 import { add, funnel } from 'ionicons/icons';
 import { useTranslation } from 'react-i18next';
+import { gql, useMutation, useQuery } from '@apollo/client';
+
+export const GET_NOTES = gql`
+  {
+    notes(includeArchived: true) {
+      id
+      createdAt
+      isArchived
+      text
+    }
+  }
+`;
+
+const CREATE_NOTE = gql`
+  mutation createNote($note: CreateNoteInput!) {
+    createNote(note: $note) {
+      id
+      createdAt
+      isArchived
+      text
+    }
+  }
+`;
 
 export default function NoteListPage(props) {
+  const [createNote] = useMutation(CREATE_NOTE, {
+    onCompleted(data) {
+      if (data && data.createNote) {
+        const id = data.createNote.id;
+        history.push(`/notes/edit/${id}`);
+      }
+    },
+    refetchQueries: [
+      {
+        query: GET_NOTES,
+      },
+    ],
+  });
+
+  const { data } = useQuery(GET_NOTES, {
+    pollInterval: 5000,
+  });
   const history = useHistory();
-  const { notes, createNote } = useNotes();
-  // const activeNotes = notes.filter((note) => note.isArchived !== true);
-  const [showActive, setShowActive] = useState(false);
+  const [showArchive, setShowArchive] = useState(true);
   const { t } = useTranslation();
+  const notes = (data && data.notes) || [];
+
+  // const { createNote } = useNotes();
+  // const activeNotes = notes.filter((note) => note.isArchived !== true);
 
   let filteredNotes;
-  if (showActive) {
+  if (showArchive) {
     filteredNotes = notes.filter((note) => note.isArchived !== true);
   } else {
     filteredNotes = notes;
   }
 
   const handleArchiveFilterClick = () => {
-    setShowActive(!showActive);
+    setShowArchive(!showArchive);
   };
 
   const handleListItemClick = (id) => {
@@ -42,8 +84,13 @@ export default function NoteListPage(props) {
   };
 
   const handleNewNoteClick = () => {
-    const { id } = createNote();
-    history.push(`/notes/edit/${id}`);
+    createNote({
+      variables: {
+        note: {
+          text: '',
+        },
+      },
+    });
   };
 
   return (
@@ -58,15 +105,15 @@ export default function NoteListPage(props) {
           <IonTitle class="title">{t('noteListPageTitle')}</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent>
-        <IonList class="note-body">
+      <IonContent className="note-text">
+        <IonList className="note-body">
           {filteredNotes.map((note) => {
             return (
               <NoteListItem
                 id={note.id}
                 key={note.id}
                 text={note.text}
-                createdAt={note.createdAt}
+                createdAt={new Date(note.createdAt)}
                 isArchived={note.isArchived}
                 onClick={handleListItemClick}
               />

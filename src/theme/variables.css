@@ -98,12 +98,6 @@ http://ionicframework.com/docs/theming/ */
     color: #0ccac4;
   }
 
-  .note-body{
-      font-family: sans-serif;
-      color: white;
-      align-content: center;
-      text-align: center;
-  }
 
 
 @media (prefers-color-scheme: dark) {
