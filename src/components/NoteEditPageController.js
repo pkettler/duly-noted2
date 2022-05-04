@@ -3,7 +3,6 @@ import NoteEditPage from './NoteEditPage';
 import { useParams } from 'react-router';
 import { useHistory } from 'react-router-dom';
 import { gql, useMutation, useQuery } from '@apollo/client';
-import useNotes from '../hooks/useNotes';
 import { GET_NOTES } from './NoteListPage';
 
 const GET_ONE_NOTE = gql`
@@ -112,7 +111,7 @@ export default function NoteEditPageController() {
 
   //Archive Note
 
-  const handleSelectedNoteArchive = () => {
+  const handleSelectedNoteArchive = (newNoteText) => {
     archiveNote({
       variables: {
         id: id,

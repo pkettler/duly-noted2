@@ -20,6 +20,7 @@ import {
   close,
 } from 'ionicons/icons';
 import styles from './NoteEditPage.module.css';
+import '../App.css';
 import { useTranslation } from 'react-i18next';
 
 export default function NoteEditPage(props) {

@@ -8,3 +8,21 @@
     color: black !important;
 }
 
+/* confirmation button text */
+button {
+    color: white !important;
+}
+
+button ion-icon {
+    color: white !important;
+
+}
+
+/* are you sure message */
+div #alert-2-msg{
+    color: #0ccac4 !important;
+}
+
+alert-wrapper ion-overlay-wrapper sc-ion-alert-md{
+    color: #0ccac4 !important;
+}
