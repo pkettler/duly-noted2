@@ -69,7 +69,7 @@ export default function NoteEditPage(props) {
             {
               text: t('noteEditArchive'),
               icon: archive,
-              handler: onArchive,
+              handler: () => onArchive(value),
             },
             {
               text: t('noteEditCancel'),

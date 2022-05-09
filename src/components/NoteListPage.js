@@ -15,14 +15,13 @@ import {
 import PropTypes from 'prop-types';
 import NoteListItem from './NoteListItem';
 import { useHistory } from 'react-router-dom';
-// import useNotes from '../hooks/useNotes';
-import { add, funnel } from 'ionicons/icons';
+import { add, funnel, funnelOutline } from 'ionicons/icons';
 import { useTranslation } from 'react-i18next';
 import { gql, useMutation, useQuery } from '@apollo/client';
 
 export const GET_NOTES = gql`
-  {
-    notes(includeArchived: true) {
+  query notes($includeArchived: Boolean) {
+    notes(includeArchived: $includeArchived) {
       id
       createdAt
       isArchived
@@ -57,23 +56,26 @@ export default function NoteListPage(props) {
     ],
   });
 
+  const [showArchive, setShowArchive] = useState(false);
   const { data } = useQuery(GET_NOTES, {
+    variables: {
+      includeArchived: showArchive,
+    },
     pollInterval: 5000,
   });
   const history = useHistory();
-  const [showArchive, setShowArchive] = useState(true);
   const { t } = useTranslation();
   const notes = (data && data.notes) || [];
 
   // const { createNote } = useNotes();
   // const activeNotes = notes.filter((note) => note.isArchived !== true);
 
-  let filteredNotes;
-  if (showArchive) {
-    filteredNotes = notes.filter((note) => note.isArchived !== true);
-  } else {
-    filteredNotes = notes;
-  }
+  // let filteredNotes;
+  // if (showArchive) {
+  //   filteredNotes = notes.filter((note) => note.isArchived !== true);
+  // } else {
+  //   filteredNotes = notes;
+  // }
 
   const handleArchiveFilterClick = () => {
     setShowArchive(!showArchive);
@@ -93,13 +95,19 @@ export default function NoteListPage(props) {
     });
   };
 
+  let funnelStatus;
+  if (showArchive) {
+    funnelStatus = funnel;
+  } else {
+    funnelStatus = funnelOutline;
+  }
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="secondary">
             <IonButton color="secondary" onClick={handleArchiveFilterClick}>
-              <IonIcon slot="icon-only" icon={funnel} />
+              <IonIcon slot="icon-only" icon={funnelStatus} />
             </IonButton>
           </IonButtons>
           <IonTitle class="title">{t('noteListPageTitle')}</IonTitle>
@@ -107,7 +115,7 @@ export default function NoteListPage(props) {
       </IonHeader>
       <IonContent className="note-text">
         <IonList className="note-body">
-          {filteredNotes.map((note) => {
+          {notes.map((note) => {
             return (
               <NoteListItem
                 id={note.id}

@@ -2,7 +2,7 @@ import { Redirect, Route } from 'react-router-dom';
 import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import NoteEditPageController from "./components/NoteEditPageController.js";
-import { NotesProvider } from './hooks/useNotes.js';
+
 import { ApolloProvider,  } from '@apollo/client';
 import  apolloClient  from './apolloClient';
 
@@ -29,9 +29,26 @@ import './App.css';
 
 setupIonicReact();
 
-const App: React.FC = () => (
-  <ApolloProvider client={apolloClient}>
-      <NotesProvider>
+// const App: React.FC = () => (
+//   <ApolloProvider client={apolloClient}>
+//       <NotesProvider>
+//         <IonApp>
+//           <IonReactRouter>
+//           <IonRouterOutlet>
+//           <Route exact path="/notes/edit/:id" component={NoteEditPageController} />
+//           <Route exact path="/notes" component={NoteListPage} />
+//           <Redirect exact from='/' to="/notes" />
+//           </IonRouterOutlet>
+//           </IonReactRouter>
+//         </IonApp>
+//       </NotesProvider>
+//   </ApolloProvider>
+
+// );
+function App(props: any) {
+  return (
+  <ApolloProvider client={props.apolloClient}>
+   
         <IonApp>
           <IonReactRouter>
           <IonRouterOutlet>
@@ -41,9 +58,8 @@ const App: React.FC = () => (
           </IonRouterOutlet>
           </IonReactRouter>
         </IonApp>
-      </NotesProvider>
+     
   </ApolloProvider>
-
-);
-
+  );
+ }
 export default App;

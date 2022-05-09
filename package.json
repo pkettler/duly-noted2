@@ -20,6 +20,7 @@
     "@types/react-dom": "^16.9.10",
     "@types/react-router": "^5.1.11",
     "@types/react-router-dom": "^5.1.7",
+    "apollo-cache-persist": "^0.1.1",
     "dayjs": "^1.10.8",
     "graphql": "^16.4.0",
     "i18next": "^21.6.14",

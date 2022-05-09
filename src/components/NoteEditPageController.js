@@ -111,12 +111,13 @@ export default function NoteEditPageController() {
 
   //Archive Note
 
-  const handleSelectedNoteArchive = (newNoteText) => {
+  const handleSelectedNoteArchive = (value) => {
     archiveNote({
       variables: {
         id: id,
         note: {
           isArchived: true,
+          text: value,
         },
       },
     });
