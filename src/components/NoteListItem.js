@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
-import { IonItem, IonLabel, IonNote } from '@ionic/react';
+import { IonItem, IonLabel } from '@ionic/react';
 import formatDate from '../util/formatDate';
 import formatNoteItemText from '../util/formatNoteItemText';
 import PropTypes from 'prop-types';
