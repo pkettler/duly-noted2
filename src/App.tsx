@@ -4,7 +4,7 @@ import { IonReactRouter } from '@ionic/react-router';
 import NoteEditPageController from "./components/NoteEditPageController.js";
 
 import { ApolloProvider,  } from '@apollo/client';
-import  apolloClient  from './apolloClient';
+// import  apolloClient  from './apolloClient';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
